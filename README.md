@@ -54,7 +54,7 @@ we can compare the bytes of what the remote advertises in pairing versus non-pai
 
 ### Pairing mode bytes
 
-These are the bytes that are advertises in pairing mode:
+These are the bytes that are advertised in pairing mode:
 
 > **NOTE**: The bytes come as one array, I've just sectioned them up with brackets here for readability.
 
@@ -91,7 +91,7 @@ is by sectioning up the bytes in the advertising packet, which can be determined
 The way it works is the first byte in each section defines the _length of that section_. The second byte in each section
 defines the _type of section_.
 
-> **NOTE**: The bytes in above are in hex values, **not decimal**, so 0x11 in hex is not 11 in decimal, it's 17 in decimal.
+> **NOTE**: The bytes above are in hex values, **not decimal**, so 0x11 in hex is not 11 in decimal, it's 17 in decimal.
 
 Take a look at the first byte in the "flags" section. It's `0x02`, which means, after that byte, there are a further 2 bytes (because 0x02 in hex means 2 in decimal). This is the _length indicator_ byte.
 
