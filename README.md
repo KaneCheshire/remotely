@@ -124,6 +124,8 @@ In this case, the value of this section is `66 7C 50 17 55 5E 22 8D E6 11 56 00 
 
 I'm not sure why the bytes are reversed but it's part of the Bluetooth specification, and the system handles figuring this out for us.
 
+> **NOTE**: `DATA_TYPE_SERVICE_UUIDS_128_BIT_PARTIAL` [apparently means](https://support.dialog-semiconductor.com/forums/post/dialog-smartbond-bluetooth-low-energy-–-software/incomplete-vs-complete-list-128-bit) that the remote is indicating that is is advertising this service, but actually has more services that can be discovered.
+
 #### Manufacturer specific datas
 
 The next two sections are both of type `DATA_TYPE_MANUFACTURER_SPECIFIC_DATA`, we know this because the type indicator is `0xFF` for those sections.
