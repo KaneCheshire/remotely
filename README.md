@@ -134,7 +134,13 @@ The "manufacturer specific data" sections are an opportunity for vendors to add 
 
 The first 2 bytes of the value is meant to indicate the manufacturer ID, of which there is an [official list](https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers/), but it looks like Boosted were using this to be able to indicate whether a remote is in pairing mode or not. In pairing mode, the manufacturer ID changes from `0x0 0x0` to `0x02 0x0`, but the rest of the data stays the same, and in the other section the id and data doesn't change.
 
-The remaining bytes in this section are the actual bytes of the "manufacturer specific data", so in the first one that's `03 03 02 FF FF FF` and in the second one it's `C6 11 AF 99 FF FF`. It's not clear to me exactly what these bytes represent, although I noticed that _some_ of the second one has the same bytes included _as the name of the remote_ (see further down).
+The remaining bytes in this section are the actual bytes of the "manufacturer specific data", so in the first one that's `03 03 02 FF FF FF` and in the second one it's `C6 11 AF 99 FF FF`.
+
+It appears that the data in the first one represents the firmware version of the remote, in reverse order. The firmware version of that remote is v2.3.3, and if you reverse the first three bytes you get `0x02 0x03 0x03`. I also tried this out with my other remote which has firmware v1.4.3 and the hex values (reversed) are `0x01 0x04 0x03`.
+
+The data in the second one appears to be the same bytes (reversed) as in the remote's name, minus the "BoostedRmt" part.
+
+I'm not sure why there are also three `0xFF` bytes in the first one and another two `0xFF` bytes in the second one, but it's the same on both remotes.
 
 #### Local name
 
