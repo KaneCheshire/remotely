@@ -132,9 +132,9 @@ The next two sections are both of type `DATA_TYPE_MANUFACTURER_SPECIFIC_DATA`, w
 
 The "manufacturer specific data" sections are an opportunity for vendors to add their own proprietary data to the advertising packets that they know how to use.
 
-The first byte of the value is meant to indicate the manufacturer ID, of which there is an [official list](https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers/), but it looks like Boosted were using this to be able to indicate whether a remote is in pairing mode or not. In pairing mode, the manufacturer ID changes from `0x0` to `0x02`, but the rest of the data stays the same, and in the other section the id and data doesn't change.
+The first 2 bytes of the value is meant to indicate the manufacturer ID, of which there is an [official list](https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers/), but it looks like Boosted were using this to be able to indicate whether a remote is in pairing mode or not. In pairing mode, the manufacturer ID changes from `0x0 0x0` to `0x02 0x0`, but the rest of the data stays the same, and in the other section the id and data doesn't change.
 
-The remaining bytes in this section are the actual bytes of the "manufacturer specific data", so in the first one that's `00 03 03 02 FF FF FF` and in the second one it's `C6 11 AF 99 FF FF`. It's not clear to me exactly what these bytes represent, although I noticed that _some_ of the second one has the same bytes included _as the name of the remote_ (see further down).
+The remaining bytes in this section are the actual bytes of the "manufacturer specific data", so in the first one that's `03 03 02 FF FF FF` and in the second one it's `C6 11 AF 99 FF FF`. It's not clear to me exactly what these bytes represent, although I noticed that _some_ of the second one has the same bytes included _as the name of the remote_ (see further down).
 
 #### Local name
 
