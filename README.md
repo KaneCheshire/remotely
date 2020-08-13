@@ -124,8 +124,6 @@ In this case, the value of this section is `66 7C 50 17 55 5E 22 8D E6 11 56 00 
 
 I'm not sure why the bytes are reversed but it's part of the Bluetooth specification, and the system handles figuring this out for us.
 
-> **NOTE**: I'm not sure why this section is showing as `DATA_TYPE_SERVICE_UUIDS_128_BIT_PARTIAL` from the remote and not `DATA_TYPE_SERVICE_UUIDS_128_BIT_COMPLETE` because the full bytes of the UUID are there.
-
 #### Manufacturer specific datas
 
 The next two sections are both of type `DATA_TYPE_MANUFACTURER_SPECIFIC_DATA`, we know this because the type indicator is `0xFF` for those sections.
@@ -186,7 +184,7 @@ The app advertises with the flag value of `0x02` rather than the remote's which 
 
 Technically this shouldn't be a reason for the board to not think it's a capable remote, but perhaps the data has to match exactly for the board to recognise it as a Boosted remote. Unfortunately, with the public Bluetooth APIs available on Android, I can't find a way to set this flag value to match explicitly.
 
-The other difference is the type indicator for the UUIDs section is `0x07` and not `0x06`. What's interesting is the actual value bytes are exactly the same, but for some reason the remote advertises it as partial (`DATA_TYPE_SERVICE_UUIDS_128_BIT_PARTIAL`) but the app advertises it as complete (`DATA_TYPE_SERVICE_UUIDS_128_BIT_COMPLETE`). Again, unfortunately I can't see a way to override this byte using the public Android Bluetooth APIs.
+The other difference is the type indicator for the UUIDs section is `0x07` and not `0x06`. The actual value bytes are exactly the same, but the remote advertises it as partial (`DATA_TYPE_SERVICE_UUIDS_128_BIT_PARTIAL`) and the app advertises it as complete (`DATA_TYPE_SERVICE_UUIDS_128_BIT_COMPLETE`). Again, unfortunately I can't see a way to override this byte using the public Android Bluetooth APIs. You can read more on the difference between these two [here](https://support.dialog-semiconductor.com/forums/post/dialog-smartbond-bluetooth-low-energy-–-software/incomplete-vs-complete-list-128-bit).
 
 This means that 60 out of the 62 bytes match, and this could potentially be a reason why I can't get the board to try to connect to the app as a remote when they're both in pairing mode.
 
