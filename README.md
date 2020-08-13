@@ -138,7 +138,7 @@ The remaining bytes in this section are the actual bytes of the "manufacturer sp
 
 It appears that the data in the first one represents the firmware version of the remote, in reverse order. The firmware version of that remote is v2.3.3, and if you reverse the first three bytes you get `0x02 0x03 0x03`. I also tried this out with my other remote which has firmware v1.4.3 and the hex values (reversed) are `0x01 0x04 0x03`.
 
-The data in the second one appears to be the same bytes (reversed) as in the remote's name, minus the "BoostedRmt" part.
+The data in the second one appears to be the same bytes (reversed) as in the remote's name, minus the "BoostedRmt" part. This is also the same value as the "serial number" characteristic value, although only one of my remotes has that characteristic (the one on firmware v2.3.3)
 
 I'm not sure why there are also three `0xFF` bytes in the first one and another two `0xFF` bytes in the second one, but it's the same on both remotes.
 
