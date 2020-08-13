@@ -95,7 +95,7 @@ defines the _type of section_.
 
 Take a look at the first byte in the "flags" section. It's `0x02`, which means, after that byte, there are a further 2 bytes (because 0x02 in hex means 2 in decimal). This is the _length indicator_ byte.
 
-The second byte in the "flags" section is `0x01`, which indicates this section is for defining the flags in the advertising packet. This is the _type indicator_ byte.
+The second byte in the "flags" section is `0x01`, which indicates this section is for defining the flags in the advertising packet. This is the _type indicator_ byte, and the possible values of this byte are [defined here](https://www.bluetooth.com/specifications/assigned-numbers/generic-access-profile/).
 
 Any bytes after that type indicator are the value of whatever the type of section is.
 
