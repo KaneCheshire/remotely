@@ -199,3 +199,34 @@ This means that 60 out of the 62 bytes match, and this could potentially be a re
 I really hope it's actually something else that's the problem, that we can fix, but I'm not sure what it is.
 
 In any case, we've learnt a lot about how a remote advertises itself, and also how Bluetooth devices are required to advertise themselves generally. Plus if you're new to engineering or haven't worked with raw bytes before, you'll hopefully have learnt a bit about how to understand them, so it's not totally wasted effort in any case.
+
+### Board advertisement datas
+
+For completeness and because it was little effort I also looked at the advertisement data for my board, which is very similar in the way it
+advertises itself while pairing:
+
+```
+[02 01 06] - Flags (3 bytes)
+[11 06 18 3C 48 E0 0B BA 12 99 E5 11 1F C6 86 5A C5 7D] - Service UUID (18 bytes)
+[09 FF 02 00 03 03 02 FF FF FF] - Manufacturer specific data (10 bytes)
+[08 FF 01 72 82 47 6A FF FF] - Manufacturer specific data (9 bytes)
+[0F 09 44 65 6C 74 61 20 46 6C 79 65 72 20 49 49] - Local name (16 bytes)
+[00 00 00 00 00 00] - Padding to make up the remaining 6 bytes out of 31 for the scan response
+```
+
+And while not pairing:
+
+```
+[02 01 06]  - Flags (3 bytes)
+[11 06 18 3C 48 E0 0B BA 12 99 E5 11 1F C6 86 5A C5 7D] - Service UUID (18 bytes)
+[09 FF 00 00 03 03 02 FF FF FF] - Manufacturer specific data (10 bytes)
+[08 FF 01 72 82 47 6A FF FF] - Manufacturer specific data (9 bytes)
+[0F 09 44 65 6C 74 61 20 46 6C 79 65 72 20 49 49]  - Local name (16 bytes)
+[00 00 00 00 00 00] - Padding to make up the remaining 6 bytes out of 31 for the scan response
+```
+
+With what we've learnt before we know how to work out the sections which are basically the same as the remote.
+
+In pairing mode the first manufacturer specific data section changes the manufacturer ID, just like the remote.
+
+The value for the first manufacturer data is again the firmware version of the board (reversed), in this case `0x02 0x03 0x03`, or v2.3.3.
