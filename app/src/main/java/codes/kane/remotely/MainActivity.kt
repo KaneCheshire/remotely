@@ -19,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     /// Scans for nearby remotes
     private val scanner = RemoteScanner()
 
+    /// Reads the data from remotes found by RemoteScanner
+    private val reader = RemoteReader()
+
     /// Allows other devices to read/write data on this device.
     /// Should start this before advertising so the server is ready to go if something
     /// discovers this device.
@@ -29,7 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (grantResults.contains(PackageManager.PERMISSION_DENIED)) throw IllegalStateException("Permissions are required to continue")
-        scanner.startScanning()
+        scanner.startScanning {
+//            scanner.stopScan() // Uncomment these two lines to make the app read the values of the first remote it discovers
+//            reader.read(it)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

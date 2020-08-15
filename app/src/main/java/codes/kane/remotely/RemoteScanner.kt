@@ -1,6 +1,6 @@
 package codes.kane.remotely
 
-import android.bluetooth.BluetoothAdapter
+import android.bluetooth.*
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanResult
@@ -26,6 +26,7 @@ class RemoteScanner {
         const val BLE_GAP_ADV_FLAG_LE_BR_EDR_HOST = 0x10
     }
 
+    private val discoveries = mutableSetOf<BluetoothDevice>()
     private val scanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
     private val scanCallback = object : ScanCallback() {
         override fun onBatchScanResults(results: MutableList<ScanResult>?) {
@@ -37,6 +38,7 @@ class RemoteScanner {
         }
 
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
+            if (!discoveries.add(result!!.device)) return // Callback gets called repeatedly, we only care about the first time it's scanned
             Log.d(TAG, "onScanResult() ------------START-------------- \n\n")
             val dataComplete = result!!.dataStatus == ScanResult.DATA_COMPLETE
             Log.d(TAG, "onScanResult() - dataComplete $dataComplete (${result.dataStatus})")
@@ -84,12 +86,15 @@ class RemoteScanner {
             val txPowerLevel = scanRecord.txPowerLevel
             Log.d(TAG, "onScanResult() - txPowerLevel $txPowerLevel")
             Log.d(TAG, "onScanResult() ------------END-------------- \n\n")
+            onDeviceDiscoveredCallback(result.device)
         }
     }
+    private lateinit var onDeviceDiscoveredCallback: (BluetoothDevice) -> Unit
 
     /// Starts scanning for nearby remotes.
     /// All output is logged quite verbosely to the console.
-    fun startScanning() {
+    fun startScanning(onDeviceDiscovered: (BluetoothDevice) -> Unit) {
+        this.onDeviceDiscoveredCallback = onDeviceDiscovered
         val filter = ScanFilter.Builder()
             // The service the remote advertises is all we need to discover nearby remotes
             // Note this doesn't mean the remote only has this service to use once you connect,
@@ -103,6 +108,10 @@ class RemoteScanner {
             .setMatchMode(ScanSettings.MATCH_MODE_STICKY)
             .build()
         scanner.startScan(listOf(filter), settings, scanCallback)
+    }
+
+    fun stopScan() {
+        scanner.stopScan(scanCallback)
     }
 }
 
