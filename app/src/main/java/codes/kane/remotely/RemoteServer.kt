@@ -44,7 +44,7 @@ class RemoteServer(context: Context) {
         }
 
         override fun onCharacteristicWriteRequest(device: BluetoothDevice?, requestId: Int, characteristic: BluetoothGattCharacteristic?, preparedWrite: Boolean, responseNeeded: Boolean, offset: Int, value: ByteArray?) {
-            Log.d(TAG, "onCharacteristicWriteRequest() - $device $requestId $offset, ${characteristic!!.uuid} $preparedWrite $responseNeeded $value ${value.hexString}")
+            Log.d(TAG, "onCharacteristicWriteRequest() - $device $requestId $offset, ${characteristic!!.uuid} $preparedWrite $responseNeeded $value ${value!!.hexString}")
             // TODO: Need to reply if necessary
         }
 
