@@ -44,6 +44,8 @@ class RemoteScanner {
             Log.d(TAG, "onScanResult() - dataComplete $dataComplete (${result.dataStatus})")
             val isConnectable = result.isConnectable
             Log.d(TAG, "onScanResult() - isConnectable $isConnectable")
+            val bluetoothClass = result.device.bluetoothClass
+            Log.d(TAG, "onScanResult() - bluetoothClass ${bluetoothClass.deviceClass} ${bluetoothClass.majorDeviceClass}")
             val isLegacy = result.isLegacy
             Log.d(TAG, "onScanResult() - isLegacy $isLegacy")
             val periodicAdvertisingInterval = result.periodicAdvertisingInterval
